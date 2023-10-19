@@ -4,6 +4,7 @@ import Login from './pages/Authentification/Login'
 import PasswordInitialisation from './pages/Authentification/PasswordInitialisation'
 import Signup from './pages/Authentification/Signup'
 import TripListPage from './pages/Trip/TripListPage'
+import TripManager from './pages/Trip/TripManager'
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
       <Route path="/password-init" element={<PasswordInitialisation />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/trips-list" element={<TripListPage />} />
+      <Route path="/add-trip" element={<TripManager />} />
     </Routes>
     </>
   )
