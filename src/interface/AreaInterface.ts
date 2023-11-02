@@ -17,5 +17,5 @@ export interface AreaInterface {
   details?: string;
   created_at?: Date;
   updated_at?: Date;
-  place?: PlaceInterface[];
+  places?: PlaceInterface[];
 }
