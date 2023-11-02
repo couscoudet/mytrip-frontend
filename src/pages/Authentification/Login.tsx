@@ -3,15 +3,20 @@ import logo from '../../assets/logo.png'
 import { Link } from 'react-router-dom'
 import { useState } from 'react';
 
-type Props = {}
+interface UserInterface {
+    id?: undefined | number;
+    name?: string;
+    email?: string;
+    password?: string;
+}
 
-function Login({}: Props) {
+function Login() {
 
-    const [data, setData] = useState({});
+    const [data, setData] = useState<UserInterface | undefined>({});
 
-    const handleChange = (e) => {
-        const {name, value} = e.target
-        const newData = {... data, [name]: value}
+    const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
+        const {name, value} = e.target as HTMLInputElement
+        const newData: UserInterface = {... data, [name]: value}
         setData(newData)
     }
 
