@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { AreaInterface } from "../interface/AreaInterface";
-import { Button } from "flowbite-react";
+import { Button, Label, Modal, TextInput, Textarea } from "flowbite-react";
 import AreaCard from "./AreaCard";
 
 type Props = {
@@ -9,6 +9,15 @@ type Props = {
 
 function PlaceTab({ areas }: Props) {
   const [data, setData] = useState<AreaInterface[] | undefined>([]);
+  const [openModalCreate, setOpenModalCreate] = useState<string | undefined>();
+  const [newArea, setNewArea] = useState<AreaInterface | undefined>();
+
+  const handleChange = (
+    e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    const { id, value } = e.target as HTMLInputElement | HTMLTextAreaElement;
+    setNewArea({ ...newArea, [id]: value });
+  };
 
   useEffect(() => {
     setData(areas);
@@ -16,12 +25,64 @@ function PlaceTab({ areas }: Props) {
 
   return (
     <div>
-      <Button color="lime">Ajouter une zone</Button>
+      <Button color="lime" onClick={() => setOpenModalCreate("default")}>
+        Ajouter une zone
+      </Button>
       <div className="flex flex-wrap">
         {areas.map((area) => (
           <AreaCard area={area}></AreaCard>
         ))}
       </div>
+
+      {/* Modal Windows */}
+      <Modal
+        show={openModalCreate === "default"}
+        onClose={() => setOpenModalCreate(undefined)}
+      >
+        <Modal.Header>Ajout d'une zone</Modal.Header>
+        <Modal.Body>
+          <div className="space-y-6">
+            <form className="flex max-w-md flex-col justify-evenly gap-4">
+              <div>
+                <div className="mb-2 block">
+                  <Label htmlFor="email1" value="Nom de la zone" />
+                </div>
+                <TextInput
+                  onChange={(e) => handleChange(e)}
+                  id="name"
+                  name="name"
+                  value={newArea?.name}
+                  required
+                  type="text"
+                />
+              </div>
+              <div className="max-w-md" id="textarea">
+                <div className="mb-2 block">
+                  <Label htmlFor="comment" value="Description" />
+                </div>
+                <Textarea
+                  onChange={(e) => handleChange(e)}
+                  className="p-1"
+                  id="details"
+                  name="details"
+                  value={newArea?.details}
+                  placeholder="Quelques mots sur votre voyage..."
+                  required
+                  rows={4}
+                />
+              </div>
+            </form>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button color="gray" onClick={() => setOpenModalCreate(undefined)}>
+            Annuler
+          </Button>
+          <Button color="lime" onClick={() => setOpenModalCreate(undefined)}>
+            Créer
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }

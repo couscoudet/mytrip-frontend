@@ -1,4 +1,12 @@
-import { Button, Card, Dropdown, Modal } from "flowbite-react";
+import {
+  Button,
+  Card,
+  Dropdown,
+  Label,
+  Modal,
+  TextInput,
+  Textarea,
+} from "flowbite-react";
 import { Link } from "react-router-dom";
 import { AreaInterface } from "../interface/AreaInterface";
 import { useState } from "react";
@@ -8,43 +16,65 @@ type Props = {
 };
 
 const AreaCard = ({ area }: Props) => {
-  const [openModal, setOpenModal] = useState<string | undefined>();
+  const [openModalSup, setOpenModalSup] = useState<string | undefined>();
 
   return (
     <div>
-      <Card className="trip-card relative m-3">
-        <div className="absolute -bottom-0 -right-0 flex justify-end">
-          <Dropdown
-            className="text-lime-500"
-            color="white"
-            label=""
-            size="xs"
-            dismissOnClick={false}
-          >
-            <Dropdown.Item className="text-lime-700">Modifier</Dropdown.Item>
-            <Dropdown.Item
-              className="text-red-500"
-              onClick={() => setOpenModal("default")}
+      <Card className="area-card relative m-3">
+        <div className="flex h-full flex-col justify-start">
+          <div className="absolute -bottom-0 -right-0 flex justify-end dark:text-white">
+            <Dropdown
+              className="text-lime-500"
+              color="white"
+              label=""
+              size="xs"
+              dismissOnClick={false}
             >
-              Supprimer
-            </Dropdown.Item>
-          </Dropdown>
+              {" "}
+              <Dropdown.Item className="text-lime-600 dark:text-lime-600">
+                Voir tout
+              </Dropdown.Item>
+              <Dropdown.Item className="text-lime-700 dark:text-lime-700">
+                Modifier
+              </Dropdown.Item>
+              <Dropdown.Item
+                className="text-red-500 dark:text-red-500"
+                onClick={() => setOpenModalSup("default")}
+              >
+                Supprimer
+              </Dropdown.Item>
+            </Dropdown>
+          </div>
+          <div className="card-title flex h-[50px] items-center justify-between">
+            <div className="w-[200px]">
+              <h5 className="text-l text-left font-bold tracking-tight text-gray-900 dark:text-white">
+                <p>{area.name}</p>
+              </h5>
+              <p className="truncate text-ellipsis text-left text-xs dark:text-gray-200">
+                {area.details}
+              </p>
+            </div>
+            <Button pill color="lime">
+              +
+            </Button>
+          </div>
+          <div className="flex h-[250px] flex-col justify-center">
+            {area?.places?.map((place) => (
+              <Link
+                to="#"
+                className="my-3 truncate text-xs font-normal text-gray-700 dark:text-gray-400"
+              >
+                {place.name}
+              </Link>
+            ))}
+          </div>
         </div>
-        <h5 className="text-l font-bold tracking-tight text-gray-900 dark:text-white">
-          <p>{area.name}</p>
-        </h5>
-        {area?.places?.map((place) => (
-          <Link
-            to="#"
-            className="truncate text-xs font-normal text-gray-700 dark:text-gray-400"
-          >
-            {place.name}
-          </Link>
-        ))}
       </Card>
+
+      {/* Modal Windows */}
       <Modal
-        show={openModal === "default"}
-        onClose={() => setOpenModal(undefined)}
+        show={openModalSup === "default"}
+        onClose={() => setOpenModalSup(undefined)}
       >
         <Modal.Header>Supprimer la zone</Modal.Header>
         <Modal.Body>
@@ -56,10 +86,10 @@ const AreaCard = ({ area }: Props) => {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button color="failure" onClick={() => setOpenModal(undefined)}>
+          <Button color="failure" onClick={() => setOpenModalSup(undefined)}>
             Oui Supprimer
           </Button>
-          <Button color="gray" onClick={() => setOpenModal(undefined)}>
+          <Button color="gray" onClick={() => setOpenModalSup(undefined)}>
             Annuler
           </Button>
         </Modal.Footer>
