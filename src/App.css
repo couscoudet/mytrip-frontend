@@ -31,3 +31,29 @@
   width: 300px;
   height: 350px;
 }
+
+.map-container {
+  height: 500px;
+  width: 90%;
+}
+
+.combobox-input {
+  border: 1px solid lime;
+  padding: 5px;
+  margin: 10px;
+}
+
+.combobox-list {
+  background-color: white;
+  opacity: 0.9;
+  border: 1px solid gray;
+}
+
+.combobox-option {
+  border: 0.5px solid gainsboro;
+  padding: 10px 5px 10px 5px;
+}
+
+.combobox-option:hover {
+  background-color: limegreen;
+}
