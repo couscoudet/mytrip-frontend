@@ -10,6 +10,7 @@ import {
 import { Link } from "react-router-dom";
 import { AreaInterface } from "../interface/AreaInterface";
 import { useState } from "react";
+import SearchMap from "./SearchMap";
 
 type Props = {
   area: AreaInterface;
@@ -17,6 +18,9 @@ type Props = {
 
 const AreaCard = ({ area }: Props) => {
   const [openModalSup, setOpenModalSup] = useState<string | undefined>();
+  const [openModalAddPlace, setOpenModalAddPlace] = useState<
+    string | undefined
+  >();
 
   return (
     <div>
@@ -54,13 +58,18 @@ const AreaCard = ({ area }: Props) => {
                 {area.details}
               </p>
             </div>
-            <Button pill color="lime">
+            <Button
+              pill
+              color="lime"
+              onClick={() => setOpenModalAddPlace("default")}
+            >
               +
             </Button>
           </div>
           <div className="flex h-[250px] flex-col justify-center">
             {area?.places?.map((place) => (
               <Link
+                key={place.id}
                 to="#"
                 className="my-3 truncate text-xs font-normal text-gray-700 dark:text-gray-400"
               >
@@ -93,6 +102,18 @@ const AreaCard = ({ area }: Props) => {
             Annuler
           </Button>
         </Modal.Footer>
+      </Modal>
+
+      <Modal
+        show={openModalAddPlace === "default"}
+        onClose={() => setOpenModalAddPlace(undefined)}
+        className="search-modal"
+        tabindex="0"
+      >
+        <Modal.Header>Ajouter un lieu</Modal.Header>
+        <Modal.Body>
+          <SearchMap />
+        </Modal.Body>
       </Modal>
     </div>
   );

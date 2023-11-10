@@ -8,7 +8,7 @@ type Props = {
 };
 
 function PlaceTab({ areas }: Props) {
-  const [data, setData] = useState<AreaInterface[] | undefined>([]);
+  const [data, setData] = useState<AreaInterface[]>([]);
   const [openModalCreate, setOpenModalCreate] = useState<string | undefined>();
   const [newArea, setNewArea] = useState<AreaInterface | undefined>();
 
@@ -17,6 +17,10 @@ function PlaceTab({ areas }: Props) {
   ) => {
     const { id, value } = e.target as HTMLInputElement | HTMLTextAreaElement;
     setNewArea({ ...newArea, [id]: value });
+  };
+
+  const submitArea = () => {
+    newArea && setData([...data, newArea]);
   };
 
   useEffect(() => {
@@ -29,8 +33,8 @@ function PlaceTab({ areas }: Props) {
         Ajouter une zone
       </Button>
       <div className="flex flex-wrap">
-        {areas.map((area) => (
-          <AreaCard area={area}></AreaCard>
+        {data.map((area) => (
+          <AreaCard key={area.id} area={area}></AreaCard>
         ))}
       </div>
 
@@ -78,7 +82,7 @@ function PlaceTab({ areas }: Props) {
           <Button color="gray" onClick={() => setOpenModalCreate(undefined)}>
             Annuler
           </Button>
-          <Button color="lime" onClick={() => setOpenModalCreate(undefined)}>
+          <Button color="lime" onClick={() => submitArea()}>
             Créer
           </Button>
         </Modal.Footer>

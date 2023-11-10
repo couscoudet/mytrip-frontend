@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import MainLayout from "../layout/MainLayout";
 
 function TripNextStepPage() {
-  const [trip, setTrip] = useState({});
+  const [trip, setTrip] = useState<any>({});
 
   useEffect(() => {
     setTrip({ id: 1 });

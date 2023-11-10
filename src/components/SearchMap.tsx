@@ -101,7 +101,7 @@ const PlacesAutocomplete = ({ setSelected }: any) => {
     searchInput?.current?.blur();
   };
 
-  const handleFocus = (e) => {};
+  const handleFocus = (e: any) => {};
   return (
     <Combobox onSelect={handleSelect}>
       <ComboboxInput
@@ -117,7 +117,7 @@ const PlacesAutocomplete = ({ setSelected }: any) => {
           setSelected(null);
         }}
       />
-      <ComboboxPopover>
+      <ComboboxPopover style={{ zIndex: 1000 }}>
         <ComboboxList className="combobox-list">
           {status === "OK" &&
             data.map(({ place_id, description }) => (
