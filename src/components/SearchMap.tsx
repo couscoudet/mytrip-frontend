@@ -97,6 +97,8 @@ const PlacesAutocomplete = ({ setSelected }: any) => {
     // const mytest = await getDetails({ placeId });
     // console.log(mytest);
     const { lat, lng } = await getLatLng(results[0]);
+    console.log(typeof lat);
+    console.log(lat);
     setSelected({ lat, lng, address });
     searchInput?.current?.blur();
   };

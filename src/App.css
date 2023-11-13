@@ -57,3 +57,9 @@
 .combobox-option:hover {
   background-color: limegreen;
 }
+
+form p.text-red-600 {
+  text-align: left;
+  margin-top: 1px;
+  margin-bottom: 5px;
+}

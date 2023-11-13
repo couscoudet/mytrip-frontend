@@ -2,23 +2,31 @@ import { useState } from "react";
 import MainLayout from "../layout/MainLayout";
 import { Button, FileInput, Label, TextInput, Textarea } from "flowbite-react";
 import { Link } from "react-router-dom";
+import { addTrip } from "../../services/api/trip";
 
 interface TripInterface {
   id?: undefined | number;
-  title?: undefined | string;
-  details?: undefined | string;
+  name?: undefined | string;
+  note?: undefined | string;
   image_url?: undefined | string;
 }
 
 function TripManager() {
   const [data, setData] = useState<TripInterface | undefined>({});
 
-  const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.FormEvent<HTMLInputElement> | React.FormEvent<HTMLTextAreaElement>,
+  ) => {
     const { name, value } = e.target as HTMLInputElement;
     const newData: TripInterface | undefined = { ...data, [name]: value };
     setData(newData);
   };
 
+  function handleSubmit(e: any) {
+    e.preventDefault();
+    addTrip(data);
+    setData({});
+  }
   return (
     <MainLayout>
       <div className="flex h-[calc(100vh-100px)] flex-col items-center">
@@ -26,16 +34,19 @@ function TripManager() {
         <h2 className="mb-5 mt-3 text-2xl text-lime-700">
           {!data?.id ? "Créer un voyage" : "Modifier un voyage"}
         </h2>
-        <form className="flex h-[60vh] max-w-md flex-col justify-evenly gap-4">
+        <form
+          onSubmit={(e) => handleSubmit(e)}
+          className="flex h-[60vh] max-w-md flex-col justify-evenly gap-4"
+        >
           <div>
             <div className="mb-2 block">
               <Label htmlFor="email1" value="Nom du voyage" />
             </div>
             <TextInput
               onChange={(e) => handleChange(e)}
-              id="title"
-              name="title"
-              value={data?.title}
+              id="name"
+              name="name"
+              value={data?.name}
               required
               type="text"
             />
@@ -45,11 +56,14 @@ function TripManager() {
               <Label htmlFor="comment" value="Description" />
             </div>
             <Textarea
+              onChange={(e) => handleChange(e)}
               className="p-1"
-              id="comment"
+              id="note"
+              name="note"
               placeholder="Quelques mots sur votre voyage..."
               required
               rows={4}
+              value={data?.note}
             />
           </div>
           <div className="max-w-md" id="fileUpload">
@@ -66,7 +80,7 @@ function TripManager() {
             <Link to="/trips-list">
               <Button color="red">Annuler</Button>
             </Link>
-            <Button color="lime">
+            <Button type="submit" color="lime">
               <Link to="/start-trip">
                 <svg
                   className="h-4 w-4 text-lime-500 dark:text-white"
