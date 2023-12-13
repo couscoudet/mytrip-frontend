@@ -19,7 +19,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/password-init" element={<PasswordInitialisation />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/trips-list" element={<TripListPage />} />
+          <Route path="/trips" element={<TripListPage />} />
           <Route path="/add-trip" element={<TripManager />} />
           <Route path="/start-trip" element={<TripNextStepPage />} />
           <Route path="/trip/:id" element={<TripDetailsPage />} />

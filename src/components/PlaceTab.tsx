@@ -49,7 +49,7 @@ function PlaceTab({ areas }: Props) {
             <form className="flex max-w-md flex-col justify-evenly gap-4">
               <div>
                 <div className="mb-2 block">
-                  <Label htmlFor="email1" value="Nom de la zone" />
+                  <Label htmlFor="name" value="Nom de la zone" />
                 </div>
                 <TextInput
                   onChange={(e) => handleChange(e)}

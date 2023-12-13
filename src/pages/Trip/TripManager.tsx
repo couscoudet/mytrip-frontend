@@ -1,8 +1,11 @@
 import { useState } from "react";
 import MainLayout from "../layout/MainLayout";
 import { Button, FileInput, Label, TextInput, Textarea } from "flowbite-react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { addTrip } from "../../services/api/trip";
+import axios from "axios";
+import { useApi } from "../../hooks/useApi";
+import { useNavigate } from "react-router-dom";
 
 interface TripInterface {
   id?: undefined | number;
@@ -12,7 +15,14 @@ interface TripInterface {
 }
 
 function TripManager() {
-  const [data, setData] = useState<TripInterface | undefined>({});
+  const [data, setData] = useState<TripInterface | undefined>({
+    id: undefined,
+    name: "",
+    note: "",
+    image_url: "",
+  });
+
+  const navigate = useNavigate();
 
   const handleChange = (
     e: React.FormEvent<HTMLInputElement> | React.FormEvent<HTMLTextAreaElement>,
@@ -22,10 +32,14 @@ function TripManager() {
     setData(newData);
   };
 
-  function handleSubmit(e: any) {
+  async function handleSubmit(e: any) {
     e.preventDefault();
-    addTrip(data);
-    setData({});
+    try {
+      await useApi().post("/trip", data);
+      navigate("/start-trip");
+    } catch (e) {
+      alert(e);
+    }
   }
   return (
     <MainLayout>
@@ -77,27 +91,25 @@ function TripManager() {
           </div>
 
           <div className="flex justify-evenly">
-            <Link to="/trips-list">
+            <Link to="/trips">
               <Button color="red">Annuler</Button>
             </Link>
             <Button type="submit" color="lime">
-              <Link to="/start-trip">
-                <svg
-                  className="h-4 w-4 text-lime-500 dark:text-white"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 8 14"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="m1 13 5.7-5.326a.909.909 0 0 0 0-1.348L1 1"
-                  />
-                </svg>
-              </Link>
+              <svg
+                className="h-4 w-4 text-lime-500 dark:text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 8 14"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="m1 13 5.7-5.326a.909.909 0 0 0 0-1.348L1 1"
+                />
+              </svg>
             </Button>
           </div>
         </form>

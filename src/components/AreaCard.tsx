@@ -11,16 +11,49 @@ import { Link } from "react-router-dom";
 import { AreaInterface } from "../interface/AreaInterface";
 import { useState } from "react";
 import SearchMap from "./SearchMap";
+import SelectPlaceSearchOption from "./SelectPlaceSearchOption";
 
 type Props = {
   area: AreaInterface;
 };
+
+const AddPlaceButton = ({ isSelected }: any) => {
+  const handleClick = () => {};
+  return (
+    isSelected && (
+      <Button className="m-5" color="lime" onClick={handleClick}>
+        Confirmer l'ajout
+      </Button>
+    )
+  );
+};
+
+//Google Maps Selected Place
+const [selected, setSelected] = useState<number | null>(null);
 
 const AreaCard = ({ area }: Props) => {
   const [openModalSup, setOpenModalSup] = useState<string | undefined>();
   const [openModalAddPlace, setOpenModalAddPlace] = useState<
     string | undefined
   >();
+  const [searchOptionToDisplay, setSearchOptionToDisplay] =
+    useState<string>("");
+
+  const handleClickSearchOption = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
+    console.log(e.target);
+    setSearchOptionToDisplay((e.target as HTMLButtonElement).id);
+  };
+
+  const reinitiate = () => {
+    setSearchOptionToDisplay("");
+    setOpenModalAddPlace(undefined);
+  };
+
+  const CancelButton = () => {
+    return <Button className="m-5" color="gray" onClick={reinitiate}></Button>;
+  };
 
   return (
     <div>
@@ -108,12 +141,23 @@ const AreaCard = ({ area }: Props) => {
         show={openModalAddPlace === "default"}
         onClose={() => setOpenModalAddPlace(undefined)}
         className="search-modal"
-        tabindex="0"
       >
         <Modal.Header>Ajouter un lieu</Modal.Header>
         <Modal.Body>
-          <SearchMap />
+          {searchOptionToDisplay == "" && (
+            <SelectPlaceSearchOption
+              handleClick={(e) => handleClickSearchOption(e)}
+            />
+          )}
+          {searchOptionToDisplay == "GoogleMaps" && (
+            <SearchMap selected={selected} setSelected={setSelected} />
+          )}
         </Modal.Body>
+        <Modal.Footer>
+          <div className="flex justify-center">
+            <CancelButton /> <AddPlaceButton isSelected={selected} />
+          </div>
+        </Modal.Footer>
       </Modal>
     </div>
   );
