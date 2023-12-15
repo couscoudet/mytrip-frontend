@@ -38,7 +38,7 @@ const SearchBar = ({
   return (
     <TextInput
       onFocus={() => setDisplayedList(true)}
-      onBlur={() => setDisplayedList(false)}
+      onBlur={() => setTimeout(() => setDisplayedList(false), 200)}
       id={nameId}
       name={nameId}
       type="text"
@@ -52,6 +52,7 @@ const ListItems = ({ items, inputItem, confirmItem }: ListProps) => {
   const strictlyIdenticalItem = items?.filter(
     (item) => item.name.toLocaleLowerCase() === inputItem.toLowerCase(),
   )[0];
+  console.log(items?.filter((item) => item.name === inputItem));
   return (
     <ListGroup className="absolute z-10 w-full" color="info">
       {!strictlyIdenticalItem && inputItem.length > 2 && (
@@ -68,6 +69,7 @@ const ListItems = ({ items, inputItem, confirmItem }: ListProps) => {
           key={item.id}
           id={item.id.toString()}
           type="button"
+          value={item.name}
           onClick={(e) => confirmItem(e)}
           className="w-full cursor-pointer border-b border-gray-200 px-4 py-2 text-left font-medium hover:bg-gray-100 hover:text-blue-700 focus:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 rtl:text-right dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:text-white dark:focus:ring-gray-500"
         >
@@ -96,22 +98,14 @@ const ComboList = ({
     setInputItem(e.target.value);
   };
 
-  // const displayItems = async () => {
-  //   const items: ReturnType<typeof setTimeout> =  setTimeout(
-  //     () => await getItems(inputItem),
-  //     1000,
-  //   );
-  //   setItems(items as unknown as Item[]);
-  // };
-
   const displayItems = async () => {
     const items = await getItems(inputItem);
     setItems(items);
   };
 
   const confirmItem = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    console.log(e.target);
-    setDisplayedList(false);
+    const { value } = e.target as HTMLInputElement;
+    setInputItem(value);
   };
 
   return (
