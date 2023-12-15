@@ -8,8 +8,9 @@ import TripManager from "./pages/Trip/TripManager";
 import TripNextStepPage from "./pages/Trip/TripNextStepPage";
 import { Flowbite } from "flowbite-react";
 import TripDetailsPage from "./pages/Trip/TripDetailsPage";
-import SearchMap from "./components/SearchMap";
+import SearchMap from "./components/GoogleMap/SearchMap";
 import FormExample from "./pages/FormExample";
+import Home from "./pages/Home";
 
 function App() {
   return (
@@ -23,7 +24,7 @@ function App() {
           <Route path="/add-trip" element={<TripManager />} />
           <Route path="/start-trip" element={<TripNextStepPage />} />
           <Route path="/trip/:id" element={<TripDetailsPage />} />
-          <Route path="/map" element={<SearchMap />} />
+          <Route path="/" element={<Home />} />
           <Route path="/form" element={<FormExample />} />
         </Routes>
       </Flowbite>

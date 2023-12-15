@@ -6,7 +6,7 @@ import {
   AiOutlinePushpin,
   AiOutlineSend,
 } from "react-icons/ai";
-import PlaceTab from "../../components/PlaceTab";
+import PlaceTab from "../../components/TripTabs/Place/PlaceTab";
 import { areas } from "../../faker";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";

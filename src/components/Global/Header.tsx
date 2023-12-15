@@ -1,5 +1,5 @@
 import { DarkThemeToggle, Navbar } from "flowbite-react";
-import logo from "../assets/logo.png";
+import logo from "../../assets/logo.png";
 import { NavLink } from "react-router-dom";
 
 function Header() {

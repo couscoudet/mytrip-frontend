@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { AreaInterface } from "../interface/AreaInterface";
+import { AreaInterface } from "../../../interface/AreaInterface";
 import { Button, Label, Modal, TextInput, Textarea } from "flowbite-react";
 import AreaCard from "./AreaCard";
 

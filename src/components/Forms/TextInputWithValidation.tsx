@@ -9,6 +9,7 @@ type Props = {
   errors?: any;
   required?: boolean;
   pattern?: RegExp;
+  patternInformation?: string;
 };
 
 const TextInputWithValidation = ({
@@ -19,6 +20,7 @@ const TextInputWithValidation = ({
   register,
   errors,
   pattern = /.*/,
+  patternInformation,
   required = false,
 }: Props) => {
   console.log(errors[nameId]);
@@ -31,6 +33,7 @@ const TextInputWithValidation = ({
           value={displayedLabel}
           color={errors[nameId] && "failure"}
         />
+        {required && <span style={{ color: "red" }}> *</span>}
       </div>
       <TextInput
         {...register(nameId, { required: required, pattern: pattern })}
@@ -46,7 +49,8 @@ const TextInputWithValidation = ({
             )}
             {errors[nameId] && errors[nameId].type === "pattern" && (
               <span className="text-xs">
-                Veuillez saisir un "{displayedLabel}" valide
+                Veuillez saisir un "{displayedLabel}" valide :{" "}
+                {patternInformation}
               </span>
             )}{" "}
           </>

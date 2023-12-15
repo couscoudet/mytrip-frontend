@@ -1,17 +1,17 @@
-import {ReactNode} from 'react'
-import Header from '../../components/Header'
+import { ReactNode } from "react";
+import Header from "../../components/Global/Header";
 
 type Props = {
-  children: ReactNode 
-}
+  children: ReactNode;
+};
 
-function MainLayout({children}: Props) {
+function MainLayout({ children }: Props) {
   return (
-    <div className='container'>
-        <Header />
-        {children}
+    <div className="container">
+      <Header />
+      {children}
     </div>
-  )
+  );
 }
 
-export default MainLayout
+export default MainLayout;

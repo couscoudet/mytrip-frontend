@@ -1,11 +1,7 @@
 import { GoogleMap, Marker, MarkerF, PolylineF } from "@react-google-maps/api";
 import PlacesAutocomplete from "./PlacesAutoComplete";
 import { useMemo } from "react";
-
-type Props = {
-  selected: number | null;
-  setSelected: React.Dispatch<React.SetStateAction<number | null>>;
-};
+import { Props } from "./SearchMap";
 
 const Map = ({ selected, setSelected }: Props) => {
   const center = useMemo(() => ({ lat: 46, lng: 1 }), []);
@@ -19,7 +15,7 @@ const Map = ({ selected, setSelected }: Props) => {
       <GoogleMap
         zoom={selected ? 12 : 4}
         center={selected ? selected : center}
-        mapContainerClassName="map-container"
+        mapContainerClassName="h-[40vh] w-[80vw] md:w-[50vw] lg:w-[30vw]"
       >
         <MarkerF position={{ lat: 11, lng: 22 }} />
         <MarkerF position={{ lat: 22, lng: 11 }} />
@@ -33,14 +29,6 @@ const Map = ({ selected, setSelected }: Props) => {
           onClick={() => console.log("oups cliqué")}
         />
       </GoogleMap>
-
-      {selected && (
-        <p>
-          adresse : <strong>{selected.address}</strong>, latitude :
-          <strong>{selected.lat}</strong>, longitude:{" "}
-          <strong>{selected.lng}</strong>
-        </p>
-      )}
     </div>
   );
 };

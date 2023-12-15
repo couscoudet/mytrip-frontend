@@ -46,6 +46,8 @@ function TripListPage() {
                 .filter((trip) => trip.role === 1)
                 .map((trip) => (
                   <TripCard
+                    key={trip.id}
+                    id={trip.id}
                     title={trip.name}
                     description={trip.notes}
                     image={trip.image_url}
@@ -59,6 +61,8 @@ function TripListPage() {
               .filter((trip) => trip.role === 2)
               .map((trip) => (
                 <TripCard
+                  key={trip.id}
+                  id={trip.id}
                   title={trip.name}
                   description={trip.notes}
                   image={trip.image_url}

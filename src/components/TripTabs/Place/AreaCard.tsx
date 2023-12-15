@@ -1,17 +1,10 @@
-import {
-  Button,
-  Card,
-  Dropdown,
-  Label,
-  Modal,
-  TextInput,
-  Textarea,
-} from "flowbite-react";
+import { Button, Card, Dropdown, Modal } from "flowbite-react";
 import { Link } from "react-router-dom";
-import { AreaInterface } from "../interface/AreaInterface";
+import { AreaInterface } from "../../../interface/AreaInterface";
 import { useState } from "react";
-import SearchMap from "./SearchMap";
+import SearchMap from "../../GoogleMap/SearchMap";
 import SelectPlaceSearchOption from "./SelectPlaceSearchOption";
+import AddPlaceManually from "./AddPlaceManually";
 
 type Props = {
   area: AreaInterface;
@@ -28,10 +21,15 @@ const AddPlaceButton = ({ isSelected }: any) => {
   );
 };
 
-//Google Maps Selected Place
-const [selected, setSelected] = useState<number | null>(null);
+export type Selected = {
+  lat: number;
+  lng: number;
+  address: string;
+};
 
 const AreaCard = ({ area }: Props) => {
+  //Google Maps Selected Place
+  const [selected, setSelected] = useState<Selected | null | undefined>(null);
   const [openModalSup, setOpenModalSup] = useState<string | undefined>();
   const [openModalAddPlace, setOpenModalAddPlace] = useState<
     string | undefined
@@ -39,20 +37,21 @@ const AreaCard = ({ area }: Props) => {
   const [searchOptionToDisplay, setSearchOptionToDisplay] =
     useState<string>("");
 
-  const handleClickSearchOption = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-  ) => {
-    console.log(e.target);
-    setSearchOptionToDisplay((e.target as HTMLButtonElement).id);
+  const handleSearchMethod = (method: string) => {
+    setSearchOptionToDisplay(method);
   };
 
   const reinitiate = () => {
-    setSearchOptionToDisplay("");
     setOpenModalAddPlace(undefined);
+    setSearchOptionToDisplay("");
   };
 
   const CancelButton = () => {
-    return <Button className="m-5" color="gray" onClick={reinitiate}></Button>;
+    return (
+      <Button className="m-5" color="gray" onClick={reinitiate}>
+        Annuler
+      </Button>
+    );
   };
 
   return (
@@ -139,19 +138,18 @@ const AreaCard = ({ area }: Props) => {
 
       <Modal
         show={openModalAddPlace === "default"}
-        onClose={() => setOpenModalAddPlace(undefined)}
+        onClose={reinitiate}
         className="search-modal"
       >
         <Modal.Header>Ajouter un lieu</Modal.Header>
         <Modal.Body>
           {searchOptionToDisplay == "" && (
-            <SelectPlaceSearchOption
-              handleClick={(e) => handleClickSearchOption(e)}
-            />
+            <SelectPlaceSearchOption handleSearchMethod={handleSearchMethod} />
           )}
           {searchOptionToDisplay == "GoogleMaps" && (
             <SearchMap selected={selected} setSelected={setSelected} />
           )}
+          {searchOptionToDisplay == "Manually" && <AddPlaceManually />}
         </Modal.Body>
         <Modal.Footer>
           <div className="flex justify-center">
