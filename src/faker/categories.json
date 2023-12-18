@@ -1,9 +1,9 @@
 {
   "data": [
-    { "id": 1, "name": "John" },
-    { "id": 2, "name": "Peter" },
-    { "id": 3, "name": "Sally" },
-    { "id": 4, "name": "Jane" },
-    { "id": 5, "name": "Bob" }
+    { "id": 1, "name": "Restaurant" },
+    { "id": 2, "name": "Hébergement" },
+    { "id": 3, "name": "Visite" },
+    { "id": 4, "name": "Monument" },
+    { "id": 5, "name": "Musée" }
   ]
 }

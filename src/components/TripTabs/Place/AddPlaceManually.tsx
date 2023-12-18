@@ -8,29 +8,31 @@ import axios from "axios";
 import fakeCategories from "../../../faker/categories.json";
 import { get } from "http";
 
-type Categories = {
-  id: number;
+type Category = {
+  id?: number | string | undefined;
   name: string;
-  [key: string]: string | number | boolean;
+};
+
+type Place = {
+  id?: number;
+  name: string;
+  address: string;
+  description: string;
+  category: Category;
 };
 
 const AddPlaceManually = () => {
-  const [place, setPlace] = useState({
+  const [place, setPlace] = useState<Place>({
     name: "",
     address: "",
     description: "",
     category: {
-      id: null,
+      id: undefined,
       name: "",
     },
   });
 
-  const [categories, setCategories] = useState<Categories[]>([]);
-
-  // const setCategory = () => {
-  //   set
-  //   setPlace({ ...place, category: { id: 1, name: "Restaurant" } });
-  // }
+  const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
     const myCategories = fakeCategories.data;
@@ -42,6 +44,10 @@ const AddPlaceManually = () => {
       category.name.toLowerCase().includes(query.toLowerCase()),
     );
     return myCategories;
+  };
+
+  const setCategoryData = (category: Category) => {
+    setPlace({ ...place, category: category });
   };
 
   return (
@@ -67,6 +73,8 @@ const AddPlaceManually = () => {
         items={categories}
         setItems={setCategories}
         getItems={getCategories}
+        setItemData={setCategoryData}
+        itemData={place.category}
       />
       <MyTextArea
         nameId="description"

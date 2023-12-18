@@ -7,6 +7,8 @@ type SearchProps = {
   setDisplayedList: React.Dispatch<React.SetStateAction<boolean>>;
   handleInputItem: (e: React.ChangeEvent<HTMLInputElement>) => void;
   inputItem: string;
+  setInputItem: React.Dispatch<React.SetStateAction<string>>;
+  itemData: Item;
 };
 
 type AllProps = {
@@ -15,12 +17,13 @@ type AllProps = {
   items: Item[];
   getItems: (input: string) => Item[];
   setItems: React.Dispatch<React.SetStateAction<Item[]>>;
+  setItemData: React.Dispatch<React.SetStateAction<Item>>;
+  itemData: Item;
 };
 
 type Item = {
-  id: number;
+  id?: number | string | undefined;
   name: string;
-  [key: string]: string | number | boolean;
 };
 
 type ListProps = {
@@ -34,11 +37,18 @@ const SearchBar = ({
   setDisplayedList,
   handleInputItem,
   inputItem,
+  setInputItem,
+  itemData,
 }: SearchProps) => {
+  const displayOnBlur = () => {
+    setDisplayedList(false);
+    setInputItem(itemData.name);
+  };
+
   return (
     <TextInput
       onFocus={() => setDisplayedList(true)}
-      onBlur={() => setTimeout(() => setDisplayedList(false), 200)}
+      onBlur={displayOnBlur}
       id={nameId}
       name={nameId}
       type="text"
@@ -67,10 +77,10 @@ const ListItems = ({ items, inputItem, confirmItem }: ListProps) => {
       {items?.map((item) => (
         <button
           key={item.id}
-          id={item.id.toString()}
+          id={item.id?.toString()}
           type="button"
           value={item.name}
-          onClick={(e) => confirmItem(e)}
+          onMouseDown={(e) => confirmItem(e)}
           className="w-full cursor-pointer border-b border-gray-200 px-4 py-2 text-left font-medium hover:bg-gray-100 hover:text-blue-700 focus:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 rtl:text-right dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:text-white dark:focus:ring-gray-500"
         >
           {item.name}
@@ -86,9 +96,12 @@ const ComboList = ({
   items,
   getItems,
   setItems,
+  setItemData,
+  itemData,
 }: AllProps) => {
   const [displayedList, setDisplayedList] = useState<boolean>(false);
   const [inputItem, setInputItem] = useState<string>("");
+  // const [confirmedChoice, setConfirmedChoice] = useState<boolean>(false);
 
   useEffect(() => {
     displayItems();
@@ -104,8 +117,10 @@ const ComboList = ({
   };
 
   const confirmItem = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    const { value } = e.target as HTMLInputElement;
+    const { id, value } = e.target as HTMLInputElement;
+    // setConfirmedChoice(true);
     setInputItem(value);
+    setItemData({ id: +id, name: value });
   };
 
   return (
@@ -116,6 +131,9 @@ const ComboList = ({
         setDisplayedList={setDisplayedList}
         handleInputItem={handleInputItem}
         inputItem={inputItem}
+        setInputItem={setInputItem}
+        itemData={itemData}
+        // confirmedChoice={confirmedChoice}
       />
       {displayedList && (
         <ListItems
