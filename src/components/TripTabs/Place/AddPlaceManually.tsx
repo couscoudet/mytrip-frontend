@@ -32,6 +32,7 @@ const AddPlaceManually = () => {
     },
   });
 
+  //fetched categories to display in combolist
   const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
