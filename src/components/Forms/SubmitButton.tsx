@@ -5,11 +5,7 @@ type Props = {
 };
 
 const SubmitButton = ({ CTA }: Props) => {
-  return (
-    <Button color="lime" type="submit">
-      {CTA}
-    </Button>
-  );
+  return <Button type="submit">{CTA}</Button>;
 };
 
 export default SubmitButton;

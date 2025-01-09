@@ -8,7 +8,6 @@ import TripManager from "./pages/Trip/TripManager";
 import TripNextStepPage from "./pages/Trip/TripNextStepPage";
 import { Flowbite } from "flowbite-react";
 import TripDetailsPage from "./pages/Trip/TripDetailsPage";
-import SearchMap from "./components/GoogleMap/SearchMap";
 import FormExample from "./pages/FormExample";
 import Home from "./pages/Home";
 
