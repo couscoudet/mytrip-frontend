@@ -14,7 +14,7 @@ Avant de commencer, assurez-vous d'avoir les éléments suivants installés sur 
 1. Clonez ce dépôt : 🖥️📂🔗
 
    ```bash
-   git clone https://github.com/votre-utilisateur/mytrip-frontend.git
+   git clone https://github.com/couscoudet/mytrip-frontend.git
    cd mytrip-frontend
    ```
 
