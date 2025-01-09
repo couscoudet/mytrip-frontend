@@ -18,9 +18,10 @@ Avant de commencer, assurez-vous d'avoir les éléments suivants installés sur 
    cd mytrip-frontend
    ```
 
-2. Installez les dépendances : 💻⚙️📦
+2. Utilisez la branche "develop" et installez les dépendances : 💻⚙️📦
 
    ```bash
+   git checkout develop
    npm install
    # ou
    yarn install
